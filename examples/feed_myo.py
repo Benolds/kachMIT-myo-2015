@@ -115,7 +115,7 @@ def main():
                 # print(new_d.toString())
 
                 if arm_string == 'right':
-                    right_roll = max(2, min(10, abs(int(10 * myo.orientation.pitch / 3.14))))
+                    right_roll = max(2, min(10, abs(int(10 * ((myo.orientation.roll + 3.14) / 6.28)))))
                     # print("right: " + str(right_roll))
                     #msg.append(right_roll) #new_d.toString())
                     msg_data.append(right_roll)
@@ -125,7 +125,7 @@ def main():
                     else:
                         msg_data.append(1.0)
                 else:
-                    left_roll = max(200, min(10000, 60 + abs(int(15000 * myo.orientation.pitch / 3.14))))
+                    left_roll = max(40, min(5000, int(5000 * ((myo.orientation.roll + 3.14) / 6.28))))
                     # print("left: " + str(left_roll))
                     #msg.append(left_roll) #new_d.toString())
                     msg_data.append(left_roll)
@@ -136,6 +136,10 @@ def main():
                 #sendData()
 
                 target.write(new_d.toString() + "\n")
+
+            # right x -> Freq: 60 - 1000 Hz;
+            # left roll -> LPF Cutoff: 40 - 20000 Hz;
+            # right roll -> Envelope Freq: 2.33333 - 18.666666 Hz
 
             msg.append(msg_data)
             print(msg)
